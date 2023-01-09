@@ -1,6 +1,6 @@
-import logo from "./logo.svg";
+//import logo from "./logo.svg";
 import "./App.css";
-import Image from "./Image";
+//import Image from "./Image";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -16,6 +16,16 @@ function App() {
       });
   }, []);
 
+  function handler() {
+    fetch("http://localhost:3001/api/choosing")
+      .then((res) => res.json())
+      .then((result) => {
+        setData(result);
+        setLoading(false);
+        console.log(result);
+      });
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -24,19 +34,27 @@ function App() {
           {loading ? (
             <h1>loading</h1>
           ) : (
-            <Image url={data ? data[0].url : "hello"} />
+            <div className="foodButton">
+              <img className="round" src={data ? data[0].url : "hello"} />
+              {console.log(data[0])}
+              <button onClick={handler}>Yummy</button>
+            </div>
           )}
 
           <div className="text">OR</div>
           {loading ? (
             <h1>loading</h1>
           ) : (
-            <Image url={data ? data[1].url : "hello"} />
+            <div className="foodButton">
+              <img className="round" src={data ? data[1].url : "hello"} />
+              <button>Yummy</button>
+            </div>
           )}
         </div>
       </header>
     </div>
   );
 }
+//console.log(data[0]);
 
 export default App;
